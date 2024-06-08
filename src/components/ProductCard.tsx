@@ -19,9 +19,9 @@ const ProductCard = ({product}:IProps) => {
         {description}
       </p>
       <div className="flex m-3 space-x-3">
-        <span className="w-10 h-10 bg-red-500 rounded-full" />
-        <span className="w-10 h-10 bg-blue-500 rounded-full" />
-        <span className="w-10 h-10 bg-yellow-500 rounded-full" />
+        <span className={`w-10 h-10 bg-red-500 rounded-full`} />
+        <span className={`w-10 h-10 bg-blue-500 rounded-full`} />
+        <span className={`w-10 h-10 bg-violet-500 rounded-full`} />
       </div>
       <div className="flex items-center m-3 justify-between">
         <span className="text-indigo-700 text-xl">${price}</span>
@@ -36,7 +36,7 @@ const ProductCard = ({product}:IProps) => {
       </div>
       <div className="flex items-center justify-between space-x-3">
         <Button className="bg-blue-600" width="w-full">Edit</Button>
-        <Button className="bg-red-600" width="w-full">Destroy</Button>
+        <Button className="bg-lime-600" width="w-full">Destroy</Button>
       </div>
     </div>
   );
