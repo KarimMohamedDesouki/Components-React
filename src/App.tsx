@@ -19,13 +19,14 @@ function App() {
       imageURL: "",
     },
   };
+
   // Render
+  const [products , setproducts] = useState<IProduct[]>(productList)
   const [product, setproduct] = useState<IProduct>(defaultProductObj);
-  const [tempColor,setTempColor] = useState<string[]>([])
+  const [tempColor, setTempColor] = useState<string[]>([]);
   const [isOpen, setIsOpen] = useState(false);
 
   console.log(tempColor);
-  
 
   function openModal() {
     setIsOpen(true);
@@ -49,15 +50,25 @@ function App() {
     console.log(product);
   };
 
+
+  const submitProduct = (): void => {
+    setproducts(prev => [ {...product, colors: tempColor}, ...prev]);
+    setproduct(defaultProductObj)
+    setTempColor([])
+    closeModal()
+
+  };
+
   const onCancel = () => {
     console.log("cancel");
     setproduct(defaultProductObj);
     closeModal();
   };
 
-  const renderedproducts = productList.map((product) => (
+  const renderedproducts = products.map((product) => (
     <ProductCard key={product.id} product={product} />
   ));
+
 
   const renderINputFormList = formInputList.map((input) => (
     <div className="flex flex-col" key={input.id}>
@@ -77,9 +88,13 @@ function App() {
     <CircleColor
       key={color}
       color={color}
-      onClick={() => 
-        setTempColor(prev=>[...prev,color])
-      }
+      onClick={() => {
+        if (tempColor.includes(color)){
+          setTempColor(prev => prev.filter(item => item !== color));
+          return;
+        }
+        setTempColor((prev) => [...prev, color]);
+      }}
     />
   ));
 
@@ -96,12 +111,24 @@ function App() {
           {renderedproducts}
         </div>
         <Modal isOpen={isOpen} closeModal={closeModal} title="Add new Product">
-          <form onSubmit={submitHandler}>
+          <form className="space-y-3" onSubmit={submitHandler}>
             {renderINputFormList}
+
+            <div className="flex items-center flex-wrap">
+              {tempColor.map((color) => (
+                <span
+                  className="p-2 m-1 rounded-full   "
+                  style={{ backgroundColor: color, borderColor: color }}
+                  key={color}
+                >
+                  {color}{" "}
+                </span>
+              ))}
+            </div>
             <div className="flex m-3 space-x-3">{renderProductColor}</div>
 
             <div className="items-center flex space-x-3">
-              <Button className="bg-blue-500 hover:bg-blue-400" width="w-full">
+              <Button className="bg-blue-500 hover:bg-blue-400" width="w-full" onClick={submitProduct}>
                 Submit
               </Button>
               <Button

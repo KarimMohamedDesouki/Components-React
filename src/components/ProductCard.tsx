@@ -15,7 +15,7 @@ const ProductCard = ({product}:IProps) => {
         alt={category.name}
       />
       <h3 className="m-3 text-xl"> {title}</h3>
-      <p className="ml-3">
+      <p className="ml-3 overflow-hidden">
         {description}
       </p>
       <div className="flex m-3 space-x-3">
